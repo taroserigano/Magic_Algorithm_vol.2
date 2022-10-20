@@ -88,17 +88,7 @@ class Solution:
 
 
         
-        class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
 
-        res = []
-        
-        def backtrack(open_n, closed_n, path):
-            
-
-            if open_n == closed_n == n:
-                res.append(path)
-                return
             
 # Input: temperatures = [73,74,75,71,69,72,76,73]
 # Output: [1,1,4,2,1,1,0,0]
@@ -171,7 +161,17 @@ class Solution:
 #  +1 BECAUSE stack has been Popped 
 
 
+    class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
 
+        res = []
+        
+        def backtrack(open_n, closed_n, path):
+            
+
+            if open_n == closed_n == n:
+                res.append(path)
+                return
 
             if open_n < n:
                 backtrack(open_n + 1, closed_n, path + "(")
