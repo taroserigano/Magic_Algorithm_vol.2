@@ -85,6 +85,37 @@ class Solution:
         return res                
 
 
+class MedianFinder(object):
+
+        1 2 5 10     15 16  90 100 
+         [min]           [max]    
+                
+    def __init__(self):
+        self.bot = []
+        self.top = []
+        
+
+    def addNum(self, num):
+        """
+        :type num: int
+        :rtype: None
+        """
+        heappush(self.bot, -num) 
+        heappush(self.top, -heappop(self.top))
+        
+        if len(self.top) > len(self.bot): 
+            heappush(self.bot, -heappop(self.top)) 
+        
+
+    def findMedian(self):
+        """
+        :rtype: float
+        """
+        if len(self.bot) != len(self.top): 
+            return -self.bot[0]
+        else: 
+            return (self.top[0] - self.bot[0]) / 2 
+
 
         
         
