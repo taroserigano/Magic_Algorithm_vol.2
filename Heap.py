@@ -4,11 +4,6 @@ def __init__(self, k: int, nums: List[int]):
 
         heapq.heapify(self.minHeap)
 
-
-
-            
-        
-
     def add(self, val: int) -> int:
         heapq.heappush(self.minHeap, val)
 
@@ -91,8 +86,8 @@ class MedianFinder(object):
          [min]           [max]    
                 
     def __init__(self):
-        self.bot = []
-        self.top = []
+        self.bot = []    # pop largest val 
+        self.top = []    # pop smallest val 
         
 
     def addNum(self, num):
@@ -100,8 +95,8 @@ class MedianFinder(object):
         :type num: int
         :rtype: None
         """
-        heappush(self.bot, -num) 
-        heappush(self.top, -heappop(self.top))
+        heappush(self.bot, -num)     # add neg. 
+        heappush(self.top, -heappop(self.bot))   # add pos.  
         
         if len(self.top) > len(self.bot): 
             heappush(self.bot, -heappop(self.top)) 
