@@ -1,0 +1,539 @@
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+
+        numSet = set()
+
+        for n in nums:
+            if n in numSet:
+                return True 
+            numSet.add(n)
+        return False     
+        
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+
+        if len(s) != len(t): return False 
+
+        return Counter(s) == Counter(t)
+
+
+class Solution:   # arr = [17,18,5,4,6,1]
+    def replaceElements(self, arr: List[int]) -> List[int]:
+        rightMax = -1
+        for i in range(len(arr) - 1, -1, -1):
+            
+            arr[i], rightMax = rightMax, max(rightMax, arr[i])
+
+        return arr
+        
+        
+class Solution:         # T: O(N). S: O(1). - s = "abc", t = "ahbgdc"
+    def isSubsequence(self, s: str, t: str) -> bool:
+        if not s:
+            return True
+        
+        i = 0
+        
+        for c in t:
+            if c == s[i]:
+                i += 1
+                if i == len(s):
+                    return True 
+        return False        
+        
+        
+        
+    class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        s = s.split() 
+        return len(s[-1])
+        
+     class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        map = {}
+
+        for i, n in enumerate(nums): 
+            diff = target - n 
+            if diff in map: 
+                return [i, map[diff]]
+
+            map[n] = i     
+
+
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+
+
+        chars = zip(*strs)
+        res = ""
+
+        for c in chars:
+            if len(set(c)) == 1:
+                res += c[0]
+            else:
+                break
+        return res
+
+# print c like this: 
+#  ('f', 'f', 'f')
+# ('l', 'l', 'l')
+# ('o', 'o', 'i')
+# ('w', 'w', 'g')
+
+
+        # n = min(strs,key=len)
+        # res = ""
+        # for i in range(len(n)):
+        #     for char in strs:
+        #         if char[i] != strs[0][i]:
+        #             return res
+        #     res += strs[0][i]
+        # return res
+                
+    
+    
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        
+         
+        res = defaultdict(list)
+
+        for s in strs:
+            res[tuple(sorted(s))].append(s)
+
+        return res.values()    
+        
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        k = 0 
+
+        for i in range(len(nums)):
+            if nums[i] != val: 
+                nums[k] = nums[i] 
+                k += 1 
+
+        return k         
+
+
+
+
+        class Solution:
+    def numUniqueEmails(self, emails: List[str]) -> int:
+        unique = set() 
+
+        for e in emails: 
+            local, domain = e.split("@")
+            local = local.split("+")[0]
+            local = local.replace(".", "") 
+            unique.add((local, domain)) 
+
+        return len(unique) 
+
+
+class Solution:      # s = "foo", t = "bar"
+    def isIsomorphic(self, s: str, t: str) -> bool:
+
+        map = {} 
+
+        for i in range(len(s)): 
+            if s[i] not in map: 
+                map[s[i]] = t[i]
+            else:     
+                if map[s[i]] != t[i]:     # "o"-> "a" not match "o"-> "r"
+                    return False 
+        
+        return len( set(map.values()) ) == len(map.values()) # check dupe
+
+
+         class Solution:         # flowerbed = [1,0,0,0,1], n = 1
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        f = [0] + flowerbed + [0] 
+
+        for i in range(1, len(f)-1):
+
+            if f[i - 1] == 0 and f[i] == 0 and f[i + 1] == 0:  # if: [0, 0, 0] 
+                f[i] = 1 
+                n -= 1 
+
+        return n <= 0     
+
+
+        
+        
+   class Solution:
+    def majorityElement(self, nums):
+        
+        count = {} 
+
+        for n in nums: 
+            count[n] = 1 + count.get(n, 0)
+
+            if count[n] > len(nums) // 2:    # major num is always at the middle 
+                return n
+
+
+class Solution:     # nums1 = [4,1,2], nums2 = [1,3,4,2]
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+
+        res = [] 
+
+        for i, n in enumerate(nums1): 
+            index = nums2.index(n)
+            flag = False 
+
+            for i in range(index, len(nums2)):
+                
+                if nums2[i] > n: 
+                    res.append(nums2[i])
+                    flag = True 
+                    break 
+            if not flag:
+                res.append('-1')
+        return res                 
+
+
+class Solution:     # O(n) 
+    def pivotIndex(self, nums: List[int]) -> int:
+        total = sum(nums)
+        leftSum = 0 
+
+        for i, n in enumerate(nums):
+            rightSum = total - n - leftSum 
+
+            if leftSum == rightSum: 
+                return i 
+
+            leftSum += n     
+
+        return -1    
+
+
+
+
+class Solution:    # T: O(N), S: O(N) 
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        
+        map = {} 
+
+        for n in nums:
+            map[n] = 1 + map.get(n, 0)
+
+        res = [] 
+
+        for n in range(1, len(nums) + 1):
+            if n not in map:
+                res.append(n)
+
+        return res              
+
+
+
+        # return set(range(1,len(nums)+1)) - set(nums)
+        
+        
+        
+class Solution:          # T&S: O(N) 
+    def maxNumberOfBalloons(self, text: str) -> int:
+
+        countText = Counter(text)
+        balloon = Counter("balloon")
+
+        res = len(text)
+
+        for c in "balloon": 
+            res = min(res, countText[c] // balloon[c])  # min, cuz All chars need to match, 
+                                                        # if any char missing, it can't create "balloon"                        
+        return res     
+
+# b 1 1
+# a 1 1
+# l 2 2
+# o 2 1
+# n 1 1
+
+
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+
+        words = s.split(" ")
+        map = {} 
+
+        if len(pattern) != len(words) or len(set(pattern)) != len(set(words)): return False 
+
+        for w, p in zip(words, pattern):
+            if w not in map: 
+                map[w] = p 
+            elif map[w] != p: 
+                return False 
+        return True        
+                    
+                    
+  class Solution:     # nums = [1,1,1,2,2,3], k = 2   # O(n+m+k)
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        res = [] 
+        count = Counter(nums)
+
+        for val, count in count.items(): 
+
+            if len(res) < k: 
+                heapq.heappush(res, (count, val))
+
+            else: 
+                heapq.heappush(res, (count, val))
+                heapq.heappop(res)
+
+        return [ val for count, val in res]            
+
+
+
+        
+            # if len(res) > k: 
+            #     heapq.heappush(res, (count, val))
+            #     heapq.heappop(res)
+            # else:     
+            #     heapq.heappush(res, (count, val))
+
+        return [val for val, count in res ]        
+            
+
+
+
+        # count = {} 
+        # freq = [[] for i in range(len(nums) + 1)]
+
+        # for n in nums:    # count 
+        #     count[n] = count.get(n, 0) + 1 
+        #                   # add to list 
+        # for num, count in count.items(): 
+        #     freq[count].append(num)
+        
+        #     #  [[], [3], [2], [1], [], [], []]  - which number? 
+        #     #   0    1    2    3               COUNTS / TIMES 
+
+        # res = [] 
+        # # add to res list and return when size == k 
+        # for i in range(len(freq)-1, -1, -1):
+        #     for n in freq[i]:
+        #         res.append(n)
+        #         if len(res) == k: 
+        #             return res 
+
+
+
+        
+
+
+
+
+
+
+
+ 
+
+#  1. create []  for each 
+#  2. add each n to count
+#  3. for loop count items and add to freq list 
+#  4. from most frequest, for loop 
+#  and add to res 
+#  5. if len reach k, return the res 
+
+
+
+
+class Solution:   # nums = [1,2,3,4]
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+
+        res = [1] * len(nums)
+
+        pre = 1 
+        for i in range(len(nums)): 
+            res[i] *= pre 
+            pre *= nums[i] 
+
+        pos = 1    
+        for i in range(len(nums)-1, -1, -1): 
+            res[i] *= pos 
+            pos *= nums[i] 
+
+        return res     
+
+
+
+
+
+
+
+
+        # res = [1] * (len(nums)) 
+
+        # prefix = 1 
+        # for i in range(len(nums)):
+        #     res[i] *= prefix        # 1, 1, 2, 6 
+        #     prefix *= nums[i]       # 1, 1, 2, 6  
+
+        # postfix = 1 
+        # for i in range(len(nums)-1, -1, -1):
+        #     res[i] *= postfix       # <- 24, 12, 8, 6 
+        #     postfix *= nums[i]      # -> 1,  4, 12, 24,
+
+        # return res         
+
+# 1. set up res [1] for len 
+# 2. prefix = 1 , for loop for each 
+# 3. * res and nums[i] 
+
+# 4. do the same for each backwards 
+
+
+
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+
+        cols = defaultdict(set)
+        rows = defaultdict(set)
+        sq = defaultdict(set) 
+
+        for r in range(9):
+            for c in range(9): 
+
+                if board[r][c] == ".": continue 
+
+                if ( 
+                    board[r][c] in cols[c] or 
+                    board[r][c] in rows[r] or 
+                    board[r][c] in sq[r // 3, c //3]
+                ) : 
+                    return False 
+
+                cols[c].add(board[r][c])
+                rows[r].add(board[r][c])
+                sq[(r // 3, c // 3)].add(board[r][c]) 
+
+        return True            
+
+
+
+
+
+
+# print(cols) defaultdict(<class 'set'>, {0: {'8', '4', '6', '5', '7'}, 1: {'9', '6', '3'}, 4: {'8', '1', '6', '2', '9', '7'}, 3: {'1', '8', '4'}, 5: {'9', '5', '3'}, 2: {'8'}, 7: {'8', '6', '7'}, 8: {'3', '1', '6', '9', '5'}, 6: {'2'}})
+
+
+
+
+
+    
+
+
+
+        # set up cols, rows, squares 
+        # 1. for loop 9 and 9 
+        # 2. check "." case
+        # 3. check cols, rows and squares 
+
+        # cols = defaultdict(set)
+        # rows = defaultdict(set) 
+        # squares = defaultdict(set)
+
+        # for r in range(9):
+        #     for c in range(9): 
+        #         if board[r][c] == ".": 
+        #             continue 
+        #         if (
+        #             board[r][c] in rows[r]
+        #             or board[r][c] in cols[c]
+        #             or board[r][c] in squares[(r // 3, c // 3)]
+        #         ):
+        #             return False
+        #         cols[c].add(board[r][c])
+        #         rows[r].add(board[r][c])
+        #         squares[(r // 3, c // 3)].add(board[r][c])
+
+        # return True              
+
+
+class Codec:
+    def encode(self, strs: List[str]) -> str:
+        """Encodes a list of strings to a single string.
+        """
+        res = "" 
+        for s in strs: 
+            res += str(len(s)) + "#" + s 
+        return res     
+        
+        
+
+    def decode(self, s: str) -> List[str]:
+        """Decodes a single string to a list of strings.
+        """
+        res = [] 
+        st = "" 
+        i = 0 
+        while i < len(s):
+            j = i 
+            while s[j] != "#": 
+                j += 1 
+            length = int(s[i : j])
+            
+            st = s[j+1 : j+1+length]
+            res.append(st)
+            i = j+1+length
+        return res     
+
+
+
+
+
+
+
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.decode(codec.encode(strs))
+
+
+
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        numSet = set(nums)
+        res = 0 
+
+
+        for n in nums: 
+            if (n - 1) not in numSet: 
+                length = 1 
+                while (n + length) in numSet: 
+                    length += 1 
+                res = max(res, length)    
+
+                    
+        return res         
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+
+
+        
+
+
+
+
+
+
+
+
