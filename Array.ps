@@ -32,14 +32,15 @@ class Solution:         # T: O(N). S: O(1). - s = "abc", t = "ahbgdc"
         if not s:
             return True
         
-        i = 0
-        
-        for c in t:
-            if c == s[i]:
-                i += 1
-                if i == len(s):
-                    return True 
-        return False        
+        i = 0 
+        for target in t: 
+            if s[i] == target: 
+                i += 1 
+
+                if i == len(s): return True 
+
+        return False         
+
         
         
         
@@ -66,15 +67,14 @@ class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
 
 
-        chars = zip(*strs)
-        res = ""
+        arrs = zip(*strs) 
+        res = "" 
 
-        for c in chars:
-            if len(set(c)) == 1:
-                res += c[0]
-            else:
-                break
-        return res
+        for char in arrs:                  # render all arrs
+            if len(set(char)) == 1:        # means all chars are same 
+                res += char[0]             # choose one "f" out of ("f","f","f")
+            else: break 
+        return res       
 
 # print c like this: 
 #  ('f', 'f', 'f')
@@ -97,13 +97,18 @@ class Solution:
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         
-         
-        res = defaultdict(list)
+        map = {} 
+        
 
-        for s in strs:
-            res[tuple(sorted(s))].append(s)
+        for s in strs: 
+            sortedStr = "".join(sorted(s)) 
 
-        return res.values()    
+            if sortedStr in map: 
+                map[sortedStr].append(s) 
+            else: 
+                map[sortedStr] = [s] 
+
+        return map.values()     
         
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
@@ -176,22 +181,21 @@ class Solution:      # s = "foo", t = "bar"
 
 class Solution:     # nums1 = [4,1,2], nums2 = [1,3,4,2]
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-
         res = [] 
 
-        for i, n in enumerate(nums1): 
-            index = nums2.index(n)
-            flag = False 
+        for num1 in nums1: 
+            found = False 
 
-            for i in range(index, len(nums2)):
-                
-                if nums2[i] > n: 
-                    res.append(nums2[i])
-                    flag = True 
+            for num2 in nums2[nums2.index(num1):]: 
+
+                if num2 > num1: 
+                    res.append(num2) 
+                    found = True 
                     break 
-            if not flag:
-                res.append('-1')
-        return res                 
+            if not found: 
+                res.append(-1)
+
+        return res                  
 
 
 class Solution:     # O(n) 
@@ -234,18 +238,18 @@ class Solution:    # T: O(N), S: O(N)
         
         
         
-class Solution:          # T&S: O(N) 
+class Solution:          # T&S: O(N)   text = "nlaebolko"  
     def maxNumberOfBalloons(self, text: str) -> int:
+        balloonCount = Counter("balloon") 
+        textCouunt = Counter(text) 
 
-        countText = Counter(text)
-        balloon = Counter("balloon")
-
-        res = len(text)
+        res = float("inf") 
 
         for c in "balloon": 
-            res = min(res, countText[c] // balloon[c])  # min, cuz All chars need to match, 
-                                                        # if any char missing, it can't create "balloon"                        
-        return res     
+
+            res = min(res, textCouunt[c] // balloonCount[c]) 
+
+        return res    
 
 # b 1 1
 # a 1 1
@@ -459,31 +463,25 @@ class Solution:
 
 class Codec:
     def encode(self, strs: List[str]) -> str:
-        """Encodes a list of strings to a single string.
-        """
         res = "" 
-        for s in strs: 
-            res += str(len(s)) + "#" + s 
-        return res     
-        
-        
 
-    def decode(self, s: str) -> List[str]:
-        """Decodes a single string to a list of strings.
-        """
-        res = [] 
-        st = "" 
-        i = 0 
-        while i < len(s):
-            j = i 
-            while s[j] != "#": 
-                j += 1 
-            length = int(s[i : j])
-            
-            st = s[j+1 : j+1+length]
-            res.append(st)
-            i = j+1+length
+        for s in strs: 
+            res += str(len(s)) + "/" + s
         return res     
+ 
+    def decode(self, s: str) -> List[str]:  # 5  #             Hello        5#World
+                                            # L  R,R+1 --->   R+1+length 
+        res = [] 
+        i = 0 
+
+        while i < len(s): 
+
+            slash = s.find("/", i) 
+            length = int(s[i:slash]) 
+            i = slash + length + 1 
+            res.append(s[slash+1: i])
+
+        return res    
 
 
 
@@ -499,21 +497,102 @@ class Codec:
 
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        numSet = set(nums)
+        numSet = set(nums) 
         res = 0 
 
-
         for n in nums: 
-            if (n - 1) not in numSet: 
-                length = 1 
-                while (n + length) in numSet: 
-                    length += 1 
-                res = max(res, length)    
+            if (n-1) not in numSet: 
 
-                    
+                count = 1 
+
+                while (n+count) in numSet: 
+                    count += 1 
+
+                res = max(res, count) 
+
         return res         
 
 
+
+
+
+class Solution:     # O(n) 
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0 
+
+        for i in range(1, len(prices)): 
+            if prices[i] > prices[i - 1]: 
+                profit += (prices[i] - prices[i - 1]) 
+
+        return profit         
+
+
+
+
+
+
+
+# Input: s = "cbaebabacd", p = "abc"
+# Output: [0,6]
+
+from collections import Counter
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+
+        start = 0 
+        sMap, pMap = {}, {} 
+        res = [] 
+
+        for c in p:
+            pMap[c] = pMap.get(c, 0) + 1 
+
+        for i in range(len(s)):     
+            sMap[s[i]] = 1 + sMap.get(s[i], 0) 
+
+            if i >= len(p) - 1: 
+                if sMap == pMap: 
+                    res.append(start)
+
+                if s[start] in sMap:         
+                    sMap[s[start]] -= 1 
+                    if sMap[s[start]] == 0: 
+                        del sMap[s[start]] 
+
+                start += 1 
+        return res                 
+
+
+   
+
+                      
+        
+# 1. keep storing as looping  
+# 2. once reached the end of window, 
+# 3. check and clean up 
+  
+                    
+            class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+
+        hay = len(haystack) 
+        need = len(needle) 
+
+        for i in range(hay - need +1): 
+            if haystack[i : i + need] == needle: 
+                return i 
+        return -1         
+
+        
+
+        
+        class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        for i in range(1,len(nums)+1):
+            if i not in nums:
+                return i
+        return i+1
+
+        
 
 
 
