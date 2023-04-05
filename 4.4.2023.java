@@ -193,6 +193,49 @@ class Solution {
 
 
 
+class Solution {
+    public int numUniqueEmails(String[] emails) {
+
+        Set<String> res = new HashSet<>(); 
+
+        for(String s : emails){ 
+            String[] prt = s.split("@"); 
+            prt[0] = prt[0].replaceAll("\\.", ""); 
+            res.add(prt[0].split("\\+")[0] + "@" + prt[1]); 
+        }
+        return res.size(); 
+
+
+
+    }
+}
+
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+
+        if(s.length() != t.length()) return false; 
+
+        int[] map1 = new int[256]; 
+        int[] map2 = new int[256]; 
+
+        for( int i= 0; i < s.length(); i++) { 
+            if(map1[s.charAt(i)] != map2[t.charAt(i)]) return false; 
+            
+                map1[s.charAt(i)] = i + 1; 
+                map2[t.charAt(i)] = i+1; 
+
+                System.out.print(map1[s.charAt(i)]); 
+        }
+
+        return true; 
+
+
+
+
+    }
+}
+
+
 
 
 
